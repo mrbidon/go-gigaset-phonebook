@@ -1,0 +1,4 @@
+phonebook_config_path: /etc/phonebook.csv
+phonebook_bin_path: /usr/local/bin/phonebook
+phonebook_port: 1333
+phonebook_location: /my/shared/dir/phonebook.csv

@@ -1,0 +1,3 @@
+$template phonebooklog,"%msg%\n"
+if $programname == 'phonebook' then /var/log/phonebook.log;phonebooklog
+if $programname == 'phonebook' then stop

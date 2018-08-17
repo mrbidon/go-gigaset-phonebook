@@ -1,0 +1,8 @@
+---
+- name: Deploy Phonebook on a RaspberryPi under raspbian
+  hosts: "phonebook"
+  become: true
+  gather_facts: False
+  user: pi
+  tasks:
+    - import_role: name=phonebook

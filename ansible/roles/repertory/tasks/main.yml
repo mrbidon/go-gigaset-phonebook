@@ -1,0 +1,47 @@
+- name: Build app
+  local_action: "shell cd .. && env GOOS=linux GOARCH=arm GOARM=6 go build phonebook "
+  become: no
+
+- name: Copy binary file
+  copy:
+    src: ../../../go-gigaset-phonebook
+    dest: "{{ phonebook_bin_path }}"
+    mode: 0555
+  notify: restart phonebook
+
+- name: Copy phonebook file
+  copy:
+    src: "{{phonebook_location}}"
+    dest: "{{ phonebook_config_path }}"
+  notify: restart phonebook
+
+- name: Copy rsyslog config file
+  template:
+    src: phonebook.rsyslog.conf.j2
+    dest: /etc/rsyslog.d/phonebook.conf
+  notify: restart rsyslog
+
+- name: Copy logrotate config file
+  template:
+    src: phonebook.logrotate.j2
+    dest: /etc/logrotate.d/phonebook
+
+- name: Copy service config file
+  template:
+    src: phonebook.service.j2
+    dest: /lib/systemd/system/phonebook.service
+  notify: systemctl daemon-reload
+
+- meta: flush_handlers
+
+- name: Ensure service is started & enabled
+  service:
+    name: phonebook
+    state: started
+    enabled: yes
+
+- name: Ensure service is started
+  wait_for:
+    port: "{{ phonebook_port }}"
+    delay: 3
+    timeout: 600

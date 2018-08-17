@@ -1,0 +1,17 @@
+[Unit]
+Description=phonebook service
+After=rsyslog.target
+
+
+[Service]
+
+ExecStart={{ phonebook_bin_path }} {{ phonebook_config_path }} {{phonebook_port}}
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=phonebook
+Restart=always
+
+
+[Install]
+WantedBy=multi-user.target
