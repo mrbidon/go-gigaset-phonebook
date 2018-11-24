@@ -1,4 +1,4 @@
-# go-gigaset-phonebook
+## Phonebook webservice for Gigaset
 
 Aim of this app is to serve a phonebook webservice on a raspberrypi (or any linux device)
 for Gigaset C530-IP in order to display incoming phone number thought a shared phonebook.
